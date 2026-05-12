@@ -19,7 +19,7 @@ class TokenStore
 
     public function getRefreshToken(): ?string
     {
-        if (!$this->account) {
+        if (! $this->account) {
             throw new ZohoException('No Zoho account connected.');
         }
 
@@ -28,7 +28,7 @@ class TokenStore
 
     public function isExpired(): bool
     {
-        if (!$this->account) {
+        if (! $this->account) {
             return true;
         }
 
@@ -52,7 +52,7 @@ class TokenStore
 
     public function getAccessToken(): string
     {
-        if (!$this->account) {
+        if (! $this->account) {
             throw new ZohoException('No Zoho account connected.');
         }
 
@@ -65,27 +65,27 @@ class TokenStore
 
     protected function refreshToken(): void
     {
-         $parameters = [
+        $parameters = [
             'client_id' => config('app.zoho.client_id'),
             'client_secret' => config('app.zoho.client_secret'),
             'grant_type' => 'refresh_token',
             'refresh_token' => $this->account->refresh_token,
         ];
-        
+
         $response = Http::asForm()->post(
-            $this->getAuthEndpoint() . '/oauth/v2/token',
+            $this->getAuthEndpoint().'/oauth/v2/token',
             $parameters
         );
 
         $data = $response->json();
 
         if ($response->failed() || isset($data['error'])) {
-            throw new ZohoException('Failed to refresh token: ' . ($data['error'] ?? $response->status()));
+            throw new ZohoException('Failed to refresh token: '.($data['error'] ?? $response->status()));
         }
 
         $this->account->access_token = $data['access_token'];
-        $this->account->api_domain   = $data['api_domain'];
-        $this->account->expires_at   = now()->addSeconds($data['expires_in']);
+        $this->account->api_domain = $data['api_domain'];
+        $this->account->expires_at = now()->addSeconds($data['expires_in']);
         $this->account->save();
     }
 }

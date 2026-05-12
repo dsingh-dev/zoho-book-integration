@@ -4,7 +4,12 @@ namespace App\Zoho\Client;
 
 class ZohoAPI
 {
-    public function __construct(private TokenStore $tokenStore, private Request $request) {}
+    protected Request $request;
+
+    public function __construct(private TokenStore $tokenStore)
+    {
+        $this->request = new Request($this->tokenStore);
+    }
 
     public function get(
         string $endpoint,
@@ -12,5 +17,4 @@ class ZohoAPI
     ) {
         return $this->request->send('GET', $endpoint, ['query' => $query]);
     }
-
 }

@@ -11,7 +11,7 @@ Route::inertia('/', 'welcome', [
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::get('/zoho/connect', [ZohoController::class, 'connect'])->name('zoho.connect');
     Route::get('/zoho/callback', [ZohoController::class, 'callback'])->name('zoho.callback');
 });
