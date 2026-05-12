@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { dashboard } from '@/routes';
 import { Head } from '@inertiajs/react';
 import { ArrowUpRightIcon } from 'lucide-react';
 import { route } from 'ziggy-js';
+import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { dashboard } from '@/routes';
 
 type ReportSection = {
     actual: number;
@@ -122,6 +122,7 @@ export default function Dashboard({
                                             <TableRow key={row.key}>
                                                 {months.map(([monthKey, monthData]) => {
                                                     const data = monthData[row.key];
+
                                                     return (
                                                         <>
                                                             <TableCell className="border text-center">
@@ -186,7 +187,7 @@ export default function Dashboard({
                                         ))}
 
                                         <TableRow>
-                                            {months.map(([monthKey]) => (
+                                            {months.map(() => (
                                                 <>
                                                     <TableCell className="border h-6" />
                                                     <TableCell className="border" />
