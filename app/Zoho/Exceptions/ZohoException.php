@@ -10,10 +10,9 @@ class ZohoException extends Exception
 
     /**
      * Returns whether the exception was thrown because of an expired access token.
-     *
-     * @return bool
      */
-    public function hasExpiredToken(): bool {
+    public function hasExpiredToken(): bool
+    {
         return $this->getMessage() === self::TOKEN_EXPIRED;
     }
 }

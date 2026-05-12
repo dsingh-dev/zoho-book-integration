@@ -10,9 +10,7 @@ class OAuth
     protected const AUTH_ENDPOINT = 'https://accounts.zoho.in';
 
     protected const scopes = [
-        "ZohoBooks.invoices.READ",
-        "ZohoBooks.bills.READ",
-        "ZohoBooks.reports.READ",
+        'ZohoBooks.fullaccess.all',
     ];
 
     public function __construct() {}
@@ -20,15 +18,15 @@ class OAuth
     public function getAuthorizationUrl(): string
     {
         $parameters = http_build_query([
-                'response_type' => 'code',
-                'client_id' => config('app.zoho.client_id'),
-                'scope' => implode(',', self::scopes),
-                'redirect_uri' => config('app.zoho.redirect_uri'),
-                'access_type' => 'offline',
-                'prompt' => 'consent',
+            'response_type' => 'code',
+            'client_id' => config('app.zoho.client_id'),
+            'scope' => implode(',', self::scopes),
+            'redirect_uri' => config('app.zoho.redirect_uri'),
+            'access_type' => 'offline',
+            'prompt' => 'consent',
         ]);
-        
-        return self::AUTH_ENDPOINT . '/oauth/v2/auth?' . $parameters;
+
+        return self::AUTH_ENDPOINT.'/oauth/v2/auth?'.$parameters;
     }
 
     /**
@@ -37,17 +35,17 @@ class OAuth
     public function getAccessToken(string $code): array
     {
         $parameters = [
-                'grant_type' => 'authorization_code',
-                'client_id' => config('app.zoho.client_id'),
-                'client_secret' => config('app.zoho.client_secret'),
-                'redirect_uri' => config('app.zoho.redirect_uri'),
-                'code' => $code,
+            'grant_type' => 'authorization_code',
+            'client_id' => config('app.zoho.client_id'),
+            'client_secret' => config('app.zoho.client_secret'),
+            'redirect_uri' => config('app.zoho.redirect_uri'),
+            'code' => $code,
         ];
 
         try {
-            $response = Http::asForm()->post(self::AUTH_ENDPOINT . '/oauth/v2/token', $parameters)->json();
+            $response = Http::asForm()->post(self::AUTH_ENDPOINT.'/oauth/v2/token', $parameters)->json();
         } catch (ZohoException $e) {
-            throw new ZohoException('OAuth failed: ' . $e->getMessage());
+            throw new ZohoException('OAuth failed: '.$e->getMessage());
         }
 
         return $response;

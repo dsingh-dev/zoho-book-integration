@@ -7,9 +7,10 @@ use App\Models\ZohoAccount;
 class ZohoService
 {
     /**
-     * @param array<string, string> $response
+     * @param  array<string, string>  $response
      */
-    public function saveAccessToken(array $response): void {
+    public function saveAccessToken(array $response): void
+    {
         ZohoAccount::updateOrCreate([
             'user_id' => auth()->id(),
         ], [
