@@ -125,9 +125,15 @@ export default function Dashboard({
                                                     return (
                                                         <>
                                                             <TableCell className="border text-center">
-                                                                <button className="font-semibold text-blue-600 underline">
-                                                                    {formatCurrency(data.actual)}
-                                                                </button>
+                                                                <a
+                                                                    href={data.report_url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <button className="font-semibold text-blue-600 underline">
+                                                                        {formatCurrency(data.actual)}
+                                                                    </button>
+                                                                </a>
                                                             </TableCell>
 
                                                             <TableCell className="border text-center">
