@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\ZohoAccount;
 use App\Zoho\Client\TokenStore;
 use App\Zoho\Client\ZohoAPI;
 use Illuminate\Support\Facades\Cache;
@@ -19,8 +18,9 @@ class ZohoReportService
 
     public function getReports(array $parameters)
     {
-        $cacheKey = 'zoho_reports_' . md5(json_encode($parameters));
-        return Cache::remember($cacheKey, 300, function() use ($parameters) {
+        $cacheKey = 'zoho_reports_'.md5(json_encode($parameters));
+
+        return Cache::remember($cacheKey, 300, function () use ($parameters) {
             return $this->api->get('reports/profitandloss', $parameters);
         });
     }

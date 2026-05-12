@@ -51,7 +51,8 @@ class DashboardController extends Controller
                 ]),
             ];
         } catch (\Exception $e) {
-            Log::error('Zoho API Error: ' . $e->getMessage());
+            Log::error('Zoho API Error: '.$e->getMessage());
+
             return [];
         }
     }
